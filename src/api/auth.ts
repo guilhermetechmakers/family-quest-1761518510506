@@ -57,4 +57,9 @@ export const authApi = {
   verifyEmail: async (token: string): Promise<void> => {
     await api.post('/auth/verify-email', { token });
   },
+
+  // Resend verification email
+  resendVerificationEmail: async (email: string): Promise<void> => {
+    await api.post('/auth/resend-verification', { email });
+  },
 };

@@ -58,7 +58,8 @@ export function SignupPage() {
         email: data.email,
         password: data.password,
       });
-      navigate('/dashboard');
+      // Redirect to email verification page with email parameter
+      navigate(`/verify-email?email=${encodeURIComponent(data.email)}`);
     } catch (error) {
       // Error is handled by the mutation
     }
