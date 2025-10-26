@@ -1,5 +1,6 @@
 import { api } from '../lib/api';
-import type { Family, CreateFamilyInput, UpdateFamilyInput, InviteMemberInput } from '@/types/family';
+import type { Family, CreateFamilyInput, UpdateFamilyInput } from '@/types/family';
+import type { InviteMemberInput } from '@/types/user';
 
 export const familiesApi = {
   // Get current user's family

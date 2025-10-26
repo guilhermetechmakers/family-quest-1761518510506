@@ -51,10 +51,3 @@ export interface UpdateFamilyInput {
   currency?: string;
   settings?: Partial<FamilySettings>;
 }
-
-export interface InviteMemberInput {
-  family_id: string;
-  email: string;
-  role: 'child' | 'guest';
-  permissions?: Partial<FamilyPermissions>;
-}

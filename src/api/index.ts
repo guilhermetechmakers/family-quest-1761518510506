@@ -5,4 +5,6 @@ export { goalsApi } from './goals';
 export { contributionsApi } from './contributions';
 export { activitiesApi } from './activities';
 export { notificationsApi } from './notifications';
+export { paymentsApi } from './payments';
+export { securityApi } from './security';
 export { api } from '../lib/api';

@@ -53,6 +53,13 @@ export interface SignUpInput {
   invite_code?: string;
 }
 
+export interface InviteMemberInput {
+  family_id: string;
+  email: string;
+  role: 'child' | 'guest';
+  permissions?: any;
+}
+
 export interface AuthResponse {
   user: User;
   token: string;
