@@ -1,10 +1,16 @@
 import { api } from '../lib/api';
-import type { Activity, CreateActivityInput, CreateCommentInput, CreateReactionInput } from '@/types/activity';
+import type { Activity, CreateActivityInput } from '@/types/activity';
 
 export const activitiesApi = {
   // Get all activities for current family
   getAll: async (): Promise<Activity[]> => {
     const response = await api.get<Activity[]>('/activities');
+    return response;
+  },
+
+  // Get activities for a specific family
+  getByFamily: async (familyId: string): Promise<Activity[]> => {
+    const response = await api.get<Activity[]>(`/activities?family_id=${familyId}`);
     return response;
   },
 
@@ -27,14 +33,14 @@ export const activitiesApi = {
   },
 
   // Add comment to activity
-  addComment: async (comment: CreateCommentInput): Promise<Activity> => {
-    const response = await api.post<Activity>('/activities/comments', comment);
+  addComment: async (activityId: string, content: string): Promise<Activity> => {
+    const response = await api.post<Activity>('/activities/comments', { activityId, content });
     return response;
   },
 
   // Add reaction to activity
-  addReaction: async (reaction: CreateReactionInput): Promise<Activity> => {
-    const response = await api.post<Activity>('/activities/reactions', reaction);
+  addReaction: async (activityId: string, emoji: string): Promise<Activity> => {
+    const response = await api.post<Activity>('/activities/reactions', { activityId, emoji });
     return response;
   },
 
