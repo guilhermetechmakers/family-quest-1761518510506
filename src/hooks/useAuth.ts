@@ -83,3 +83,17 @@ export const usePasswordReset = () => {
     },
   });
 };
+
+// Update password mutation
+export const useUpdatePassword = () => {
+  return useMutation({
+    mutationFn: ({ token, password }: { token: string; password: string }) => 
+      authApi.updatePassword(token, password),
+    onSuccess: () => {
+      toast.success('Password updated successfully! You can now sign in with your new password.');
+    },
+    onError: (error: any) => {
+      toast.error(`Password update failed: ${error.response?.data?.message || error.message}`);
+    },
+  });
+};
