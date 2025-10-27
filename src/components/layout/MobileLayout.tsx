@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { SearchBar } from '@/components/search';
 import { 
   Home, 
   Target, 
@@ -12,7 +13,8 @@ import {
   Menu,
   X,
   Settings,
-  HelpCircle
+  HelpCircle,
+  Search
 } from 'lucide-react';
 
 interface MobileLayoutProps {
@@ -31,9 +33,16 @@ const navigationItems = [
 
 export function MobileLayout({ children, unreadNotifications = 0 }: MobileLayoutProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleSearch = (query: string) => {
+    navigate(`/search?q=${encodeURIComponent(query)}`);
+    setShowSearch(false);
+  };
 
   return (
     <div className="min-h-screen bg-primary-bg">
@@ -52,7 +61,14 @@ export function MobileLayout({ children, unreadNotifications = 0 }: MobileLayout
           </div>
           
           <div className="flex items-center space-x-2">
-                <Button variant="ghost" size="icon">
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => setShowSearch(!showSearch)}
+            >
+              <Search className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon">
               <Bell className="h-5 w-5" />
               {unreadNotifications > 0 && (
                 <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs">
@@ -65,6 +81,17 @@ export function MobileLayout({ children, unreadNotifications = 0 }: MobileLayout
             </Button>
           </div>
         </div>
+        
+        {/* Mobile Search Bar */}
+        {showSearch && (
+          <div className="px-4 pb-4 border-b bg-white">
+            <SearchBar
+              placeholder="Search goals, activities..."
+              onSearch={handleSearch}
+              className="w-full"
+            />
+          </div>
+        )}
       </header>
 
       {/* Mobile Menu Overlay */}

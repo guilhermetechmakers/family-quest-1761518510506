@@ -8,3 +8,4 @@ export * from './payment';
 export * from './admin';
 export * from './transaction';
 export * from './help';
+export * from './search';

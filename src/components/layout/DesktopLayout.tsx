@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { SearchBar } from '@/components/search';
 import { 
   Home, 
   Target, 
@@ -11,7 +12,6 @@ import {
   User, 
   Settings,
   Plus,
-  Search,
   Menu,
   HelpCircle
 } from 'lucide-react';
@@ -37,8 +37,13 @@ const navigationItems = [
 export function DesktopLayout({ children, unreadNotifications = 0, user }: DesktopLayoutProps) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleSearch = (query: string) => {
+    navigate(`/search?q=${encodeURIComponent(query)}`);
+  };
 
   return (
     <div className="min-h-screen bg-primary-bg flex">
@@ -120,14 +125,11 @@ export function DesktopLayout({ children, unreadNotifications = 0, user }: Deskt
                 <Menu className="h-5 w-5" />
               </Button>
               
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-text-tertiary" />
-                <input
-                  type="text"
-                  placeholder="Search goals, activities..."
-                  className="pl-10 pr-4 py-2 w-64 border border-gray-300 rounded-lg focus:ring-2 focus:ring-mint-green focus:border-transparent"
-                />
-              </div>
+              <SearchBar
+                placeholder="Search goals, activities..."
+                onSearch={handleSearch}
+                className="w-64"
+              />
             </div>
 
             <div className="flex items-center space-x-4">

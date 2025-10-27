@@ -24,6 +24,7 @@ import { TransactionHistoryPage } from "@/pages/TransactionHistoryPage";
 import { ContributionsPage } from "@/pages/ContributionsPage";
 import { AboutHelpPage } from "@/pages/AboutHelpPage";
 import { ErrorTestPage } from "@/pages/ErrorTestPage";
+import { SearchPage } from "@/pages/SearchPage";
 
 // React Query client with optimal defaults
 const queryClient = new QueryClient({
@@ -105,6 +106,11 @@ export default function App() {
           <Route path="/contributions" element={
             <ResponsiveLayout unreadNotifications={3} user={mockUser}>
               <ContributionsPage />
+            </ResponsiveLayout>
+          } />
+          <Route path="/search" element={
+            <ResponsiveLayout unreadNotifications={3} user={mockUser}>
+              <SearchPage />
             </ResponsiveLayout>
           } />
           
