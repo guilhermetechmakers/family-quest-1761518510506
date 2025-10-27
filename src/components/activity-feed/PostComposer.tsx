@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -78,14 +79,49 @@ export function PostComposer({
     setNewTag('');
   };
 
-  const handleMediaUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMediaUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
     
-    // In a real app, you'd upload these files and get URLs
-    files.forEach(file => {
-      const url = URL.createObjectURL(file);
-      setMediaUrls(prev => [...prev, url]);
+    // Validate file types and sizes
+    const validFiles = files.filter(file => {
+      const isValidType = file.type.startsWith('image/') || file.type.startsWith('video/');
+      const isValidSize = file.size <= 10 * 1024 * 1024; // 10MB limit
+      
+      if (!isValidType) {
+        toast.error(`${file.name} is not a valid image or video file`);
+        return false;
+      }
+      
+      if (!isValidSize) {
+        toast.error(`${file.name} is too large. Maximum size is 10MB`);
+        return false;
+      }
+      
+      return true;
     });
+
+    if (validFiles.length === 0) return;
+
+    // In a real app, you'd upload these files and get URLs
+    // For now, we'll create object URLs for demonstration
+    const newUrls: string[] = [];
+    
+    for (const file of validFiles) {
+      try {
+        // Simulate upload delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const url = URL.createObjectURL(file);
+        newUrls.push(url);
+      } catch (error) {
+        toast.error(`Failed to process ${file.name}`);
+      }
+    }
+    
+    setMediaUrls(prev => [...prev, ...newUrls]);
+    
+    if (newUrls.length > 0) {
+      toast.success(`${newUrls.length} file(s) uploaded successfully`);
+    }
   };
 
   const removeMedia = (index: number) => {
@@ -313,24 +349,57 @@ export function PostComposer({
           </div>
           
           {mediaUrls.length > 0 && (
-            <div className="mt-2 grid grid-cols-4 gap-2">
-              {mediaUrls.map((url, index) => (
-                <div key={index} className="relative group">
-                  <img
-                    src={url}
-                    alt={`Media ${index + 1}`}
-                    className="w-full h-20 object-cover rounded-lg"
-                  />
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="absolute top-1 right-1 h-6 w-6 p-0 bg-red-500 hover:bg-red-600 text-white rounded-full"
-                    onClick={() => removeMedia(index)}
-                  >
-                    <X className="h-3 w-3" />
-                  </Button>
-                </div>
-              ))}
+            <div className="mt-3 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-text-secondary">
+                  Uploaded Media ({mediaUrls.length})
+                </span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setMediaUrls([])}
+                  className="text-text-tertiary hover:text-red-500"
+                >
+                  <X className="h-4 w-4 mr-1" />
+                  Clear All
+                </Button>
+              </div>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {mediaUrls.map((url, index) => (
+                  <div key={index} className="relative group">
+                    <div className="aspect-square rounded-lg overflow-hidden bg-gray-100">
+                      {url.includes('video') ? (
+                        <video
+                          src={url}
+                          className="w-full h-full object-cover"
+                          controls
+                        />
+                      ) : (
+                        <img
+                          src={url}
+                          alt={`Media ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      )}
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="absolute top-2 right-2 h-6 w-6 p-0 bg-red-500/90 hover:bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => removeMedia(index)}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+              
+              {mediaUrls.length >= 10 && (
+                <p className="text-xs text-text-tertiary text-center">
+                  Maximum 10 media files allowed
+                </p>
+              )}
             </div>
           )}
         </div>
