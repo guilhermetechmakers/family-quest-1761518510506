@@ -37,6 +37,10 @@ const notificationIcons = {
   member_joined: Users,
   comment_added: MessageCircle,
   reaction_added: Heart,
+  reminder: Bell,
+  payment_received: DollarSign,
+  goal_created: Target,
+  family_invite: Users,
 };
 
 const notificationColors = {
@@ -48,6 +52,10 @@ const notificationColors = {
   member_joined: 'text-light-pink',
   comment_added: 'text-text-tertiary',
   reaction_added: 'text-light-pink',
+  reminder: 'text-pastel-yellow',
+  payment_received: 'text-mint-green',
+  goal_created: 'text-light-purple',
+  family_invite: 'text-pale-lavender',
 };
 
 export function NotificationCenter({
