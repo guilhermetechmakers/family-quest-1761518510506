@@ -1,5 +1,5 @@
 import { api } from '../lib/api';
-import type { SecuritySettings } from '@/types/payment';
+import type { SecuritySettings } from '@/types/admin';
 
 export const securityApi = {
   // Get security settings

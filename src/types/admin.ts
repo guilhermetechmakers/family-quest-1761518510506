@@ -1,11 +1,4 @@
-export interface AdminUser extends User {
-  last_login: string;
-  status: 'active' | 'suspended' | 'pending';
-  audit_logs: AuditLog[];
-  family_count: number;
-  goal_count: number;
-  contribution_count: number;
-}
+// This interface is redefined below as a standalone interface
 
 export interface AuditLog {
   id: string;
@@ -146,5 +139,166 @@ export interface ModerationFilters {
   date_to?: string;
 }
 
-// Re-export User type from user.ts
-import type { User } from './user';
+
+// System Health Types
+export interface SystemHealth {
+  status: 'healthy' | 'degraded' | 'down';
+  services: {
+    database: 'up' | 'down';
+    redis: 'up' | 'down';
+    payment_gateway: 'up' | 'down';
+    email_service: 'up' | 'down';
+  };
+  metrics: {
+    response_time_ms: number;
+    error_rate: number;
+    uptime_percentage: number;
+  };
+}
+
+// Security Settings Types
+export interface SecuritySettings {
+  // Authentication Settings
+  passwordMinLength: number;
+  passwordRequireUppercase: boolean;
+  passwordRequireNumbers: boolean;
+  passwordRequireSymbols: boolean;
+  passwordExpiryDays: number;
+  maxLoginAttempts: number;
+  lockoutDurationMinutes: number;
+  
+  // Session Settings
+  sessionTimeoutMinutes: number;
+  requireReauthForSensitiveActions: boolean;
+  allowConcurrentSessions: boolean;
+  
+  // Security Features
+  enable2FA: boolean;
+  enableAuditLogging: boolean;
+  enableIPWhitelist: boolean;
+  enableRateLimiting: boolean;
+  enableCSRFProtection: boolean;
+  
+  // Data Protection
+  enableDataEncryption: boolean;
+  enableBackupEncryption: boolean;
+  dataRetentionDays: number;
+  enableGDPRCompliance: boolean;
+  
+  // Monitoring
+  enableSecurityAlerts: boolean;
+  enableSuspiciousActivityDetection: boolean;
+  alertThreshold: 'low' | 'medium' | 'high';
+  enableRealTimeMonitoring: boolean;
+}
+
+// Audit Log Types
+export interface AuditLogFilters {
+  action?: string;
+  date_from?: string;
+  date_to?: string;
+  search?: string;
+  user_id?: string;
+  severity?: 'low' | 'medium' | 'high';
+}
+
+// System Metrics Types
+export interface SystemMetrics {
+  cpu_usage: number;
+  memory_usage: number;
+  disk_usage: number;
+  network_io: number;
+  active_users: number;
+  requests_per_minute: number;
+  cache_hit_rate: number;
+  queue_length: number;
+}
+
+// Security Alert Types
+export interface SecurityAlert {
+  id: string;
+  type: 'login_anomaly' | 'suspicious_activity' | 'failed_attempts' | 'data_breach' | 'system_compromise';
+  severity: 'low' | 'medium' | 'high' | 'critical';
+  title: string;
+  description: string;
+  user_id?: string;
+  ip_address?: string;
+  created_at: string;
+  resolved_at?: string;
+  status: 'open' | 'investigating' | 'resolved' | 'false_positive';
+  metadata: Record<string, any>;
+}
+
+// Admin Dashboard Types
+export interface AdminDashboardMetrics {
+  total_users: number;
+  active_users_today: number;
+  new_users_this_week: number;
+  total_goals: number;
+  completed_goals: number;
+  pending_moderations: number;
+  failed_transactions: number;
+  system_health_score: number;
+  security_alerts: number;
+  revenue_this_month: number;
+  revenue_growth_rate: number;
+}
+
+// Admin Activity Types
+export interface AdminActivity {
+  id: string;
+  admin_id: string;
+  admin_name: string;
+  action: string;
+  target_type: 'user' | 'goal' | 'transaction' | 'content' | 'system';
+  target_id: string;
+  details: Record<string, any>;
+  ip_address: string;
+  user_agent: string;
+  created_at: string;
+}
+
+// Admin Permissions Types
+export interface AdminPermissions {
+  can_manage_users: boolean;
+  can_moderate_content: boolean;
+  can_view_analytics: boolean;
+  can_manage_transactions: boolean;
+  can_send_broadcasts: boolean;
+  can_view_audit_logs: boolean;
+  can_manage_security: boolean;
+  can_view_system_health: boolean;
+  can_impersonate_users: boolean;
+  can_export_data: boolean;
+}
+
+// Admin Role Types
+export interface AdminRole {
+  id: string;
+  name: string;
+  description: string;
+  permissions: AdminPermissions;
+  created_at: string;
+  updated_at: string;
+}
+
+// Admin User Types
+export interface AdminUser {
+  id: string;
+  email: string;
+  full_name: string;
+  avatar_url?: string;
+  role: AdminRole;
+  permissions: AdminPermissions;
+  family_id?: string;
+  created_at: string;
+  updated_at: string;
+  is_verified: boolean;
+  last_login: string;
+  status: 'active' | 'suspended' | 'pending';
+  audit_logs: AuditLog[];
+  family_count: number;
+  goal_count: number;
+  contribution_count: number;
+  created_by?: string;
+}

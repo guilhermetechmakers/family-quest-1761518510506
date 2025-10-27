@@ -18,13 +18,14 @@ import {
   Copy
 } from 'lucide-react';
 import { useSecuritySettings, useEnable2FA, useVerify2FA, useDisable2FA } from '@/hooks/useProfile';
+import type { PaymentSecuritySettings } from '@/types/payment';
 import { useSignOut } from '@/hooks/useAuth';
 import { ChangePasswordModal } from './ChangePasswordModal';
 import { TwoFactorModal } from './TwoFactorModal';
 import { cn } from '@/lib/utils';
 
 export function Security() {
-  const { data: securitySettings, isLoading } = useSecuritySettings();
+  const { data: securitySettings, isLoading } = useSecuritySettings() as { data: PaymentSecuritySettings | undefined; isLoading: boolean };
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
   const [is2FAModalOpen, setIs2FAModalOpen] = useState(false);
   const [showBackupCodes, setShowBackupCodes] = useState(false);

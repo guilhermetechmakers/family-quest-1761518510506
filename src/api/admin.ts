@@ -57,6 +57,14 @@ export const adminApi = {
     return response;
   },
 
+  updateUserRole: async (id: string, role: 'admin' | 'parent' | 'child' | 'guest'): Promise<void> => {
+    await api.patch(`/admin/users/${id}/role`, { role });
+  },
+
+  bulkUpdateUsers: async (userIds: string[], updates: { status?: 'active' | 'suspended' | 'pending' }): Promise<void> => {
+    await api.post('/admin/users/bulk-update', { user_ids: userIds, updates });
+  },
+
   // Content Moderation
   getModerationQueue: async (filters?: ModerationFilters): Promise<ContentModeration[]> => {
     const params = new URLSearchParams();
@@ -170,5 +178,43 @@ export const adminApi = {
       };
     }>('/admin/system/health');
     return response;
+  },
+
+  // Security Settings
+  getSecuritySettings: async (): Promise<any> => {
+    const response = await api.get<any>('/admin/security/settings');
+    return response;
+  },
+
+  updateSecuritySettings: async (settings: any): Promise<void> => {
+    await api.put('/admin/security/settings', settings);
+  },
+
+  // Audit Logs
+  getAllAuditLogs: async (filters?: {
+    action?: string;
+    date_from?: string;
+    date_to?: string;
+    search?: string;
+  }): Promise<AuditLog[]> => {
+    const params = new URLSearchParams();
+    if (filters?.action) params.append('action', filters.action);
+    if (filters?.date_from) params.append('date_from', filters.date_from);
+    if (filters?.date_to) params.append('date_to', filters.date_to);
+    if (filters?.search) params.append('search', filters.search);
+
+    const response = await api.get<AuditLog[]>(`/admin/audit-logs?${params.toString()}`);
+    return response;
+  },
+
+  exportAuditLogs: async (filters?: any): Promise<Blob> => {
+    const params = new URLSearchParams();
+    if (filters?.action) params.append('action', filters.action);
+    if (filters?.date_from) params.append('date_from', filters.date_from);
+    if (filters?.date_to) params.append('date_to', filters.date_to);
+    if (filters?.search) params.append('search', filters.search);
+
+    const response = await api.get(`/admin/audit-logs/export?${params.toString()}`);
+    return response as Blob;
   },
 };

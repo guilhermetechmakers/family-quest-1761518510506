@@ -225,7 +225,7 @@ export function UserManagementTable({ onUserSelect }: UserManagementTableProps) 
                   <div className="flex items-center gap-3 mb-1">
                     <h3 className="font-medium text-text-primary truncate">{user.full_name}</h3>
                     {getStatusBadge(user.status)}
-                    {getRoleBadge(user.role)}
+                    {getRoleBadge(user.role.name)}
                   </div>
                   
                   <div className="flex items-center gap-4 text-sm text-text-secondary">

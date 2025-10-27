@@ -88,6 +88,32 @@ export function useResetUserPassword() {
   });
 }
 
+export function useUpdateUserRole() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: ({ id, role }: { id: string; role: 'admin' | 'parent' | 'child' | 'guest' }) =>
+      adminApi.updateUserRole(id, role),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: adminKeys.users() });
+      queryClient.invalidateQueries({ queryKey: adminKeys.stats() });
+    },
+  });
+}
+
+export function useBulkUpdateUsers() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: ({ userIds, updates }: { userIds: string[]; updates: { status?: 'active' | 'suspended' | 'pending' } }) =>
+      adminApi.bulkUpdateUsers(userIds, updates),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: adminKeys.users() });
+      queryClient.invalidateQueries({ queryKey: adminKeys.stats() });
+    },
+  });
+}
+
 // Content Moderation
 export function useModerationQueue(filters?: ModerationFilters) {
   return useQuery({
@@ -212,5 +238,45 @@ export function useSystemHealth() {
     queryFn: adminApi.getSystemHealth,
     refetchInterval: 1000 * 60 * 2, // 2 minutes
     staleTime: 1000 * 30, // 30 seconds
+  });
+}
+
+// Security Settings
+export function useSecuritySettings() {
+  return useQuery({
+    queryKey: [...adminKeys.all, 'security-settings'],
+    queryFn: () => adminApi.getSecuritySettings(),
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+}
+
+export function useUpdateSecuritySettings() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: (settings: any) => adminApi.updateSecuritySettings(settings),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [...adminKeys.all, 'security-settings'] });
+    },
+  });
+}
+
+// Audit Logs
+export function useAllAuditLogs(filters?: {
+  action?: string;
+  date_from?: string;
+  date_to?: string;
+  search?: string;
+}) {
+  return useQuery({
+    queryKey: [...adminKeys.all, 'audit-logs', filters],
+    queryFn: () => adminApi.getAllAuditLogs(filters),
+    staleTime: 1000 * 60 * 2, // 2 minutes
+  });
+}
+
+export function useExportAuditLogs() {
+  return useMutation({
+    mutationFn: (filters?: any) => adminApi.exportAuditLogs(filters),
   });
 }

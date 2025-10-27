@@ -10,7 +10,11 @@ import {
   Menu, 
   X,
   LogOut,
-  User
+  User,
+  Headphones,
+  Activity,
+  Lock,
+  FileText
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -27,7 +31,11 @@ const adminPages = [
   { id: 'moderation', label: 'Content Moderation', icon: Shield },
   { id: 'transactions', label: 'Transactions', icon: CreditCard },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+  { id: 'support', label: 'Support Tickets', icon: Headphones },
   { id: 'broadcast', label: 'Broadcast Messages', icon: MessageSquare },
+  { id: 'health', label: 'System Health', icon: Activity },
+  { id: 'security', label: 'Security Settings', icon: Lock },
+  { id: 'audit', label: 'Audit Logs', icon: FileText },
   { id: 'settings', label: 'System Settings', icon: Settings },
 ];
 

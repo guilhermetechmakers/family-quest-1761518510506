@@ -142,6 +142,17 @@ export default function App() {
           
           {/* Admin routes */}
           <Route path="/admin" element={<AdminDashboardPage />} />
+          <Route path="/admin/overview" element={<AdminDashboardPage />} />
+          <Route path="/admin/users" element={<AdminDashboardPage />} />
+          <Route path="/admin/moderation" element={<AdminDashboardPage />} />
+          <Route path="/admin/transactions" element={<AdminDashboardPage />} />
+          <Route path="/admin/analytics" element={<AdminDashboardPage />} />
+          <Route path="/admin/support" element={<AdminDashboardPage />} />
+          <Route path="/admin/broadcast" element={<AdminDashboardPage />} />
+          <Route path="/admin/health" element={<AdminDashboardPage />} />
+          <Route path="/admin/security" element={<AdminDashboardPage />} />
+          <Route path="/admin/audit" element={<AdminDashboardPage />} />
+          <Route path="/admin/settings" element={<AdminDashboardPage />} />
           
           {/* Error pages */}
           <Route path="/500" element={<ServerErrorPage />} />

@@ -1,5 +1,5 @@
 // Simple fetch wrapper with error handling
-async function apiRequest<T>(
+export async function apiRequest<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {

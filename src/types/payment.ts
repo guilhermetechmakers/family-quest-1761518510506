@@ -40,7 +40,7 @@ export interface Transaction {
   updated_at: string;
 }
 
-export interface SecuritySettings {
+export interface PaymentSecuritySettings {
   two_factor_enabled: boolean;
   backup_codes: string[];
   last_password_change: string;

@@ -1,54 +1,88 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { AdminStatsCards } from '@/components/admin/AdminStatsCards';
-import { UserManagementTable } from '@/components/admin/UserManagementTable';
-import { ModerationQueue } from '@/components/admin/ModerationQueue';
+import { EnhancedUserManagement } from '@/components/admin/EnhancedUserManagement';
+import { EnhancedModerationQueue } from '@/components/admin/EnhancedModerationQueue';
+import { ContentModerationDetail } from '@/components/admin/ContentModerationDetail';
 import { TransactionManagement } from '@/components/admin/TransactionManagement';
-import { AnalyticsCharts } from '@/components/admin/AnalyticsCharts';
+import { EnhancedAnalyticsDashboard } from '@/components/admin/EnhancedAnalyticsDashboard';
+import { SupportTicketManagement } from '@/components/admin/SupportTicketManagement';
+import { BroadcastMessagesManagement } from '@/components/admin/BroadcastMessagesManagement';
+import { SystemHealthDashboard } from '@/components/admin/SystemHealthDashboard';
+import { SecuritySettings } from '@/components/admin/SecuritySettings';
+import { AuditLogViewer } from '@/components/admin/AuditLogViewer';
 import { useAdminDashboardStats } from '@/hooks/useAdmin';
+import type { ContentModeration } from '@/types/admin';
 import { Card } from '@/components/ui/card';
 import { 
   Activity, 
   Users, 
   Target,
   AlertTriangle,
-  CheckCircle
+  CheckCircle,
+  Headphones
 } from 'lucide-react';
 
 export function AdminDashboardPage() {
+  const location = useLocation();
   const [currentPage, setCurrentPage] = useState('overview');
+  const [selectedContent, setSelectedContent] = useState<ContentModeration | null>(null);
   const { data: stats, isLoading: statsLoading } = useAdminDashboardStats();
+
+  // Update current page based on URL
+  useEffect(() => {
+    const path = location.pathname;
+    if (path.startsWith('/admin/')) {
+      const page = path.split('/admin/')[1] || 'overview';
+      setCurrentPage(page);
+    }
+  }, [location.pathname]);
 
   const renderPageContent = () => {
     switch (currentPage) {
       case 'overview':
-        return <OverviewPage stats={stats} isLoading={statsLoading} />;
+        return <OverviewPage stats={stats} isLoading={statsLoading} onPageChange={setCurrentPage} />;
       case 'users':
-        return <UserManagementTable />;
+        return <EnhancedUserManagement />;
       case 'moderation':
-        return <ModerationQueue />;
+        return <EnhancedModerationQueue onContentSelect={setSelectedContent} />;
       case 'transactions':
         return <TransactionManagement />;
       case 'analytics':
-        return <AnalyticsCharts />;
+        return <EnhancedAnalyticsDashboard />;
+      case 'support':
+        return <SupportTicketManagement />;
       case 'broadcast':
-        return <BroadcastMessagesPage />;
+        return <BroadcastMessagesManagement />;
+      case 'health':
+        return <SystemHealthDashboard />;
+      case 'security':
+        return <SecuritySettings />;
+      case 'audit':
+        return <AuditLogViewer />;
       case 'settings':
         return <SystemSettingsPage />;
       default:
-        return <OverviewPage stats={stats} isLoading={statsLoading} />;
+        return <OverviewPage stats={stats} isLoading={statsLoading} onPageChange={setCurrentPage} />;
     }
   };
 
   return (
     <AdminLayout currentPage={currentPage} onPageChange={setCurrentPage}>
       {renderPageContent()}
+      {selectedContent && (
+        <ContentModerationDetail
+          content={selectedContent}
+          onClose={() => setSelectedContent(null)}
+        />
+      )}
     </AdminLayout>
   );
 }
 
-function OverviewPage({ stats, isLoading }: { stats: any; isLoading: boolean }) {
+function OverviewPage({ stats, isLoading, onPageChange }: { stats: any; isLoading: boolean; onPageChange: (page: string) => void }) {
   return (
     <div className="space-y-8">
       {/* Welcome Section */}
@@ -102,14 +136,14 @@ function OverviewPage({ stats, isLoading }: { stats: any; isLoading: boolean }) 
               title="Analytics"
               description="View platform insights"
               color="bg-light-pink"
-              onClick={() => {}}
+              onClick={() => onPageChange('analytics')}
             />
             <QuickActionCard
-              icon={AlertTriangle}
-              title="System Health"
-              description="Monitor system status"
+              icon={Headphones}
+              title="Support Tickets"
+              description="Manage user support"
               color="bg-pastel-yellow"
-              onClick={() => {}}
+              onClick={() => onPageChange('support')}
             />
           </div>
         </Card>
@@ -215,20 +249,20 @@ function ActivityItem({
   );
 }
 
-function BroadcastMessagesPage() {
-  return (
-    <Card className="p-6">
-      <h2 className="text-xl font-semibold text-text-primary mb-6">Broadcast Messages</h2>
-      <div className="text-center py-12">
-        <div className="text-text-secondary">
-          <Activity className="h-12 w-12 mx-auto mb-4 opacity-50" />
-          <p className="text-lg font-medium mb-2">Broadcast Messages</p>
-          <p className="text-sm">Send announcements to users</p>
-        </div>
-      </div>
-    </Card>
-  );
-}
+// function BroadcastMessagesPage() {
+//   return (
+//     <Card className="p-6">
+//       <h2 className="text-xl font-semibold text-text-primary mb-6">Broadcast Messages</h2>
+//       <div className="text-center py-12">
+//         <div className="text-text-secondary">
+//           <Activity className="h-12 w-12 mx-auto mb-4 opacity-50" />
+//           <p className="text-lg font-medium mb-2">Broadcast Messages</p>
+//           <p className="text-sm">Send announcements to users</p>
+//         </div>
+//       </div>
+//     </Card>
+//   );
+// }
 
 function SystemSettingsPage() {
   return (
