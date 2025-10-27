@@ -14,4 +14,5 @@ export { adminApi } from './admin';
 export { helpApi } from './help';
 export { searchApi } from './search';
 export { cardsApi, mockCardsApi } from './cards';
+export { cacheApi, ClientCache, PerformanceMonitor } from './cache';
 export * from './privacy';

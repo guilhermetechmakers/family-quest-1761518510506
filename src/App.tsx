@@ -28,6 +28,8 @@ import { ErrorTestPage } from "@/pages/ErrorTestPage";
 import { SearchPage } from "@/pages/SearchPage";
 import { ShareableCardsPage } from "@/pages/ShareableCardsPage";
 import { PublicCardPage } from "@/pages/PublicCardPage";
+import { PerformancePage } from "@/pages/PerformancePage";
+import { CacheManagementPage } from "@/pages/CacheManagementPage";
 
 // React Query client with optimal defaults
 const queryClient = new QueryClient({
@@ -125,6 +127,16 @@ export default function App() {
           <Route path="/cards" element={
             <ResponsiveLayout unreadNotifications={3} user={mockUser}>
               <ShareableCardsPage />
+            </ResponsiveLayout>
+          } />
+          <Route path="/performance" element={
+            <ResponsiveLayout unreadNotifications={3} user={mockUser}>
+              <PerformancePage />
+            </ResponsiveLayout>
+          } />
+          <Route path="/cache" element={
+            <ResponsiveLayout unreadNotifications={3} user={mockUser}>
+              <CacheManagementPage />
             </ResponsiveLayout>
           } />
           
