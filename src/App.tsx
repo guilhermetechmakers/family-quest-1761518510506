@@ -32,6 +32,7 @@ import { PublicCardPage } from "@/pages/PublicCardPage";
 import { PerformancePage } from "@/pages/PerformancePage";
 import { CacheManagementPage } from "@/pages/CacheManagementPage";
 import { ProgressTrackingPage } from "@/pages/ProgressTrackingPage";
+import { CheckoutPage } from "@/pages/CheckoutPage";
 
 // React Query client with optimal defaults
 const queryClient = new QueryClient({
@@ -149,6 +150,11 @@ export default function App() {
           <Route path="/progress/:id" element={
             <ResponsiveLayout unreadNotifications={3} user={mockUser}>
               <ProgressTrackingPage />
+            </ResponsiveLayout>
+          } />
+          <Route path="/checkout" element={
+            <ResponsiveLayout unreadNotifications={3} user={mockUser}>
+              <CheckoutPage />
             </ResponsiveLayout>
           } />
           

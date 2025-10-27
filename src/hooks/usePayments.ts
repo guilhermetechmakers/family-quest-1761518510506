@@ -87,6 +87,23 @@ export const useConfirmPayment = () => {
   });
 };
 
+// Create payment method mutation
+export const useCreatePaymentMethod = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: paymentsApi.createPaymentMethod,
+    onSuccess: () => {
+      // Invalidate payment methods
+      queryClient.invalidateQueries({ queryKey: paymentKeys.methods() });
+      toast.success('Payment method created successfully');
+    },
+    onError: (error) => {
+      toast.error(`Failed to create payment method: ${error.message}`);
+    },
+  });
+};
+
 // Save payment method mutation
 export const useSavePaymentMethod = () => {
   const queryClient = useQueryClient();
