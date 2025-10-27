@@ -9,7 +9,6 @@ import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useSignIn, useSignUp } from '@/hooks/useAuth';
-import { PasswordRecoveryModal } from '@/components/auth/PasswordRecoveryModal';
 import { TermsCheckbox } from '@/components/auth/TermsAcknowledgement';
 import { 
   Eye, 
@@ -51,7 +50,6 @@ export function AuthPage() {
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [showPasswordRecovery, setShowPasswordRecovery] = useState(false);
   const [searchParams] = useSearchParams();
   const location = useLocation();
   const navigate = useNavigate();
@@ -359,13 +357,12 @@ export function AuthPage() {
                           Remember me
                         </label>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => setShowPasswordRecovery(true)}
+                      <Link
+                        to="/forgot-password"
                         className="text-sm text-mint-green hover:text-light-mint transition-colors"
                       >
                         Forgot password?
-                      </button>
+                      </Link>
                     </div>
 
                     <Button
@@ -673,11 +670,6 @@ export function AuthPage() {
         </div>
       </div>
 
-      {/* Password Recovery Modal */}
-      <PasswordRecoveryModal
-        isOpen={showPasswordRecovery}
-        onClose={() => setShowPasswordRecovery(false)}
-      />
     </div>
   );
 }

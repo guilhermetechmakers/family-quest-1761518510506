@@ -5,7 +5,8 @@ import { ResponsiveLayout } from "@/components/layout/ResponsiveLayout";
 import { LandingPage } from "@/pages/LandingPage";
 import { AuthPage } from "@/pages/AuthPage";
 import { EmailVerificationPage } from "@/pages/EmailVerificationPage";
-import { PasswordResetPage } from "@/pages/PasswordResetPage";
+import { ForgotPasswordPage } from "@/pages/ForgotPasswordPage";
+import { ResetPasswordPage } from "@/pages/ResetPasswordPage";
 import { DashboardPage } from "@/pages/DashboardPage";
 import { GoalDetailPage } from "@/pages/GoalDetailPage";
 import { CreateGoalPage } from "@/pages/CreateGoalPage";
@@ -52,7 +53,8 @@ export default function App() {
           <Route path="/login" element={<AuthPage />} />
           <Route path="/signup" element={<AuthPage />} />
           <Route path="/verify-email" element={<EmailVerificationPage />} />
-          <Route path="/forgot-password" element={<PasswordResetPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/terms" element={<TermsOfServicePage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/cookies" element={<CookiePolicyPage />} />

@@ -16,40 +16,28 @@ import {
   Shield, 
   Key, 
   Smartphone, 
-  AlertTriangle,
-  Eye,
-  EyeOff
+  AlertTriangle
 } from 'lucide-react';
-import { useProfile, useUpdateProfile, useChangePassword, use2FA } from '@/hooks/useSettings';
-import { toast } from 'sonner';
+import { useProfile, useUpdateProfile, use2FA } from '@/hooks/useSettings';
+import { PasswordChangeForm } from '@/components/PasswordChangeForm';
+import { TwoFactorSetup } from '@/components/TwoFactorSetup';
 
 const profileSchema = z.object({
   full_name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
 });
 
-const passwordSchema = z.object({
-  currentPassword: z.string().min(1, 'Current password is required'),
-  newPassword: z.string().min(8, 'Password must be at least 8 characters'),
-  confirmPassword: z.string(),
-}).refine((data) => data.newPassword === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
-});
 
 type ProfileFormData = z.infer<typeof profileSchema>;
-type PasswordFormData = z.infer<typeof passwordSchema>;
 
 export function AccountSettings() {
-  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [show2FASetup, setShow2FASetup] = useState(false);
   const [is2FAEnabled] = useState(false);
 
   const { data: profile, isLoading } = useProfile();
   const updateProfile = useUpdateProfile();
-  const changePassword = useChangePassword();
-  const { enable2FA, disable2FA } = use2FA();
+  const { disable2FA } = use2FA();
 
   const profileForm = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -59,29 +47,12 @@ export function AccountSettings() {
     },
   });
 
-  const passwordForm = useForm<PasswordFormData>({
-    resolver: zodResolver(passwordSchema),
-  });
-
   const onProfileSubmit = (data: ProfileFormData) => {
     updateProfile.mutate(data);
   };
 
-  const onPasswordSubmit = (data: PasswordFormData) => {
-    changePassword.mutate({
-      currentPassword: data.currentPassword,
-      newPassword: data.newPassword,
-    });
-    passwordForm.reset();
-  };
-
   const handleEnable2FA = () => {
-    enable2FA.mutate(undefined, {
-      onSuccess: () => {
-        // In a real app, you'd show a QR code modal here
-        toast.success('2FA setup initiated. Please scan the QR code.');
-      },
-    });
+    setShow2FASetup(true);
   };
 
   const handleDisable2FA = (code: string) => {
@@ -196,116 +167,28 @@ export function AccountSettings() {
           <CardContent className="space-y-6">
             {/* Change Password */}
             <div>
-              <h4 className="text-lg font-medium text-text-primary mb-4 flex items-center gap-2">
-                <Key className="h-5 w-5" />
-                Change Password
-              </h4>
-              <form onSubmit={passwordForm.handleSubmit(onPasswordSubmit)} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="currentPassword">Current Password</Label>
-                  <div className="relative">
-                    <Input
-                      id="currentPassword"
-                      type={showCurrentPassword ? 'text' : 'password'}
-                      {...passwordForm.register('currentPassword')}
-                      placeholder="Enter current password"
-                      className="rounded-xl pr-10"
-                    />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-                      onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                    >
-                      {showCurrentPassword ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
-                  {passwordForm.formState.errors.currentPassword && (
-                    <p className="text-sm text-red-500">
-                      {passwordForm.formState.errors.currentPassword.message}
-                    </p>
-                  )}
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="newPassword">New Password</Label>
-                    <div className="relative">
-                      <Input
-                        id="newPassword"
-                        type={showNewPassword ? 'text' : 'password'}
-                        {...passwordForm.register('newPassword')}
-                        placeholder="Enter new password"
-                        className="rounded-xl pr-10"
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-                        onClick={() => setShowNewPassword(!showNewPassword)}
-                      >
-                        {showNewPassword ? (
-                          <EyeOff className="h-4 w-4" />
-                        ) : (
-                          <Eye className="h-4 w-4" />
-                        )}
-                      </Button>
-                    </div>
-                    {passwordForm.formState.errors.newPassword && (
-                      <p className="text-sm text-red-500">
-                        {passwordForm.formState.errors.newPassword.message}
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="confirmPassword">Confirm Password</Label>
-                    <div className="relative">
-                      <Input
-                        id="confirmPassword"
-                        type={showConfirmPassword ? 'text' : 'password'}
-                        {...passwordForm.register('confirmPassword')}
-                        placeholder="Confirm new password"
-                        className="rounded-xl pr-10"
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      >
-                        {showConfirmPassword ? (
-                          <EyeOff className="h-4 w-4" />
-                        ) : (
-                          <Eye className="h-4 w-4" />
-                        )}
-                      </Button>
-                    </div>
-                    {passwordForm.formState.errors.confirmPassword && (
-                      <p className="text-sm text-red-500">
-                        {passwordForm.formState.errors.confirmPassword.message}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex justify-end">
-                  <Button 
-                    type="submit" 
-                    disabled={changePassword.isPending}
-                    className="btn-primary"
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-lg font-medium text-text-primary flex items-center gap-2">
+                  <Key className="h-5 w-5" />
+                  Change Password
+                </h4>
+                {!showPasswordForm && (
+                  <Button
+                    onClick={() => setShowPasswordForm(true)}
+                    variant="outline"
+                    className="btn-outline"
                   >
-                    {changePassword.isPending ? 'Updating...' : 'Update Password'}
+                    Change Password
                   </Button>
-                </div>
-              </form>
+                )}
+              </div>
+              
+              {showPasswordForm && (
+                <PasswordChangeForm
+                  onSuccess={() => setShowPasswordForm(false)}
+                  className="mb-6"
+                />
+              )}
             </div>
 
             <Separator />
@@ -326,41 +209,48 @@ export function AccountSettings() {
                 Add an extra layer of security to your account with two-factor authentication.
               </p>
 
-              <div className="flex gap-3">
-                {!is2FAEnabled ? (
-                  <Button onClick={handleEnable2FA} className="btn-primary">
-                    Enable 2FA
-                  </Button>
-                ) : (
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button variant="outline" className="border-red-200 text-red-600 hover:bg-red-50">
-                        Disable 2FA
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle className="flex items-center gap-2">
-                          <AlertTriangle className="h-5 w-5 text-red-500" />
-                          Disable Two-Factor Authentication
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          Are you sure you want to disable two-factor authentication? This will make your account less secure.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => handleDisable2FA('')}
-                          className="bg-red-500 hover:bg-red-600"
-                        >
+              {!show2FASetup ? (
+                <div className="flex gap-3">
+                  {!is2FAEnabled ? (
+                    <Button onClick={handleEnable2FA} className="btn-primary">
+                      Enable 2FA
+                    </Button>
+                  ) : (
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="outline" className="border-red-200 text-red-600 hover:bg-red-50">
                           Disable 2FA
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                )}
-              </div>
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="flex items-center gap-2">
+                            <AlertTriangle className="h-5 w-5 text-red-500" />
+                            Disable Two-Factor Authentication
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Are you sure you want to disable two-factor authentication? This will make your account less secure.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => handleDisable2FA('')}
+                            className="bg-red-500 hover:bg-red-600"
+                          >
+                            Disable 2FA
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  )}
+                </div>
+              ) : (
+                <TwoFactorSetup
+                  onSuccess={() => setShow2FASetup(false)}
+                  onCancel={() => setShow2FASetup(false)}
+                />
+              )}
             </div>
           </CardContent>
         </Card>
