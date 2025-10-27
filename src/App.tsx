@@ -15,6 +15,7 @@ import { NotificationsPage } from "@/pages/NotificationsPage";
 import { SettingsPage } from "@/pages/SettingsPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { TermsOfServicePage } from "@/pages/TermsOfServicePage";
+import { PrivacyPolicyPage } from "@/pages/PrivacyPolicyPage";
 import { AdminDashboardPage } from "@/pages/AdminDashboardPage";
 import { TransactionHistoryPage } from "@/pages/TransactionHistoryPage";
 
@@ -49,6 +50,7 @@ export default function App() {
           <Route path="/verify-email" element={<EmailVerificationPage />} />
           <Route path="/forgot-password" element={<PasswordResetPage />} />
           <Route path="/terms" element={<TermsOfServicePage />} />
+          <Route path="/privacy" element={<PrivacyPolicyPage />} />
           
           {/* Protected routes with responsive layout */}
           <Route path="/dashboard" element={
