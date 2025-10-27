@@ -26,6 +26,8 @@ import { ContributionsPage } from "@/pages/ContributionsPage";
 import { AboutHelpPage } from "@/pages/AboutHelpPage";
 import { ErrorTestPage } from "@/pages/ErrorTestPage";
 import { SearchPage } from "@/pages/SearchPage";
+import { ShareableCardsPage } from "@/pages/ShareableCardsPage";
+import { PublicCardPage } from "@/pages/PublicCardPage";
 
 // React Query client with optimal defaults
 const queryClient = new QueryClient({
@@ -62,6 +64,7 @@ export default function App() {
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/cookies" element={<CookiePolicyPage />} />
           <Route path="/help" element={<AboutHelpPage />} />
+          <Route path="/share/:shareToken" element={<PublicCardPage />} />
           
           {/* Protected routes with responsive layout */}
           <Route path="/dashboard" element={
@@ -117,6 +120,11 @@ export default function App() {
           <Route path="/search" element={
             <ResponsiveLayout unreadNotifications={3} user={mockUser}>
               <SearchPage />
+            </ResponsiveLayout>
+          } />
+          <Route path="/cards" element={
+            <ResponsiveLayout unreadNotifications={3} user={mockUser}>
+              <ShareableCardsPage />
             </ResponsiveLayout>
           } />
           
