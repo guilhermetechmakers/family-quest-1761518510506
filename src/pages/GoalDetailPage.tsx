@@ -44,7 +44,8 @@ import {
   Sparkles,
   Trophy,
   Gift,
-  Zap
+  Zap,
+  BarChart3
 } from 'lucide-react';
 import { formatRelativeTime } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -175,6 +176,13 @@ export function GoalDetailPage() {
             </div>
             
             <div className="flex items-center gap-3">
+              <Button 
+                onClick={() => navigate(`/progress/${id}`)}
+                className="bg-pale-lavender hover:bg-light-purple text-text-primary"
+              >
+                <BarChart3 className="h-4 w-4 mr-2" />
+                View Progress
+              </Button>
               <Button 
                 onClick={handleShareGoal}
                 className="bg-mint-green hover:bg-light-mint text-text-primary"

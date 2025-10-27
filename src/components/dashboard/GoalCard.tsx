@@ -7,6 +7,7 @@ import {
   Users, 
   ArrowRight,
   Target,
+  BarChart3,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { formatCurrency, calculateProgress } from '@/lib/utils';
@@ -173,8 +174,18 @@ export function GoalCard({ goal, index, onQuickContribute }: GoalCardProps) {
           )}
         </div>
 
-        {/* Action Button */}
-        <div className="flex justify-end">
+        {/* Action Buttons */}
+        <div className="flex justify-between gap-2">
+          <Link to={`/progress/${goal.id}`}>
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="border-pale-lavender text-pale-lavender hover:bg-pale-lavender hover:text-text-primary transition-all duration-200"
+            >
+              <BarChart3 className="h-4 w-4 mr-1" />
+              Progress
+            </Button>
+          </Link>
           <Link to={`/goals/${goal.id}`}>
             <Button 
               variant="outline" 

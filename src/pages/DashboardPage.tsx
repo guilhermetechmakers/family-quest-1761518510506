@@ -6,6 +6,7 @@ import { StatsCards } from '@/components/dashboard/StatsCards';
 import { GoalsSection } from '@/components/dashboard/GoalsSection';
 import { ActivityFeed } from '@/components/dashboard/ActivityFeed';
 import { MilestonesWidget } from '@/components/dashboard/MilestonesWidget';
+import { ProgressTrackingWidget } from '@/components/dashboard/ProgressTrackingWidget';
 import { QuickActions } from '@/components/dashboard/QuickActions';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -86,6 +87,12 @@ export function DashboardPage() {
 
           {/* Sidebar - Takes up 1 column on large screens */}
           <div className="space-y-6">
+            {/* Progress Tracking Widget */}
+            <ProgressTrackingWidget
+              familyId="family-123"
+              isLoading={goalsLoading}
+            />
+
             {/* Recent Activity Feed */}
             <ActivityFeed
               activities={activities || []}
