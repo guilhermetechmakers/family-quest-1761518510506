@@ -11,7 +11,8 @@ import {
   Plus,
   Menu,
   X,
-  Settings
+  Settings,
+  HelpCircle
 } from 'lucide-react';
 
 interface MobileLayoutProps {
@@ -25,6 +26,7 @@ const navigationItems = [
   { path: '/activity', icon: Activity, label: 'Activity' },
   { path: '/notifications', icon: Bell, label: 'Notifications' },
   { path: '/profile', icon: User, label: 'Profile' },
+  { path: '/help', icon: HelpCircle, label: 'Help' },
 ];
 
 export function MobileLayout({ children, unreadNotifications = 0 }: MobileLayoutProps) {
@@ -114,7 +116,7 @@ export function MobileLayout({ children, unreadNotifications = 0 }: MobileLayout
 
       {/* Mobile Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t lg:hidden">
-        <div className="grid grid-cols-5 h-16">
+        <div className="grid grid-cols-6 h-16">
           {navigationItems.map((item) => (
             <Link
               key={item.path}

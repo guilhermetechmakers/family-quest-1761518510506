@@ -10,4 +10,5 @@ export { securityApi } from './security';
 export { settingsApi } from './settings';
 export { transactionsApi } from './transactions';
 export { adminApi } from './admin';
+export { helpApi } from './help';
 export * from './privacy';

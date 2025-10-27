@@ -12,7 +12,8 @@ import {
   Settings,
   Plus,
   Search,
-  Menu
+  Menu,
+  HelpCircle
 } from 'lucide-react';
 
 interface DesktopLayoutProps {
@@ -30,6 +31,7 @@ const navigationItems = [
   { path: '/activity', icon: Activity, label: 'Activity' },
   { path: '/notifications', icon: Bell, label: 'Notifications' },
   { path: '/profile', icon: User, label: 'Profile' },
+  { path: '/help', icon: HelpCircle, label: 'Help' },
 ];
 
 export function DesktopLayout({ children, unreadNotifications = 0, user }: DesktopLayoutProps) {

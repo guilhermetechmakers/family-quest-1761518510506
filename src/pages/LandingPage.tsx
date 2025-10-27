@@ -371,10 +371,10 @@ export function LandingPage() {
             <div>
               <h4 className="font-semibold text-text-primary mb-4">Support</h4>
               <ul className="space-y-2 text-text-secondary">
-                <li><a href="#" className="hover:text-mint-green">Help Center</a></li>
+                <li><Link to="/help" className="hover:text-mint-green">Help Center</Link></li>
                 <li><a href="#" className="hover:text-mint-green">Contact Us</a></li>
                 <li><Link to="/terms" className="hover:text-mint-green">Terms of Service</Link></li>
-                <li><a href="#" className="hover:text-mint-green">Privacy Policy</a></li>
+                <li><Link to="/privacy" className="hover:text-mint-green">Privacy Policy</Link></li>
               </ul>
             </div>
             <div>

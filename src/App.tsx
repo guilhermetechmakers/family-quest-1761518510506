@@ -18,6 +18,7 @@ import { TermsOfServicePage } from "@/pages/TermsOfServicePage";
 import { PrivacyPolicyPage } from "@/pages/PrivacyPolicyPage";
 import { AdminDashboardPage } from "@/pages/AdminDashboardPage";
 import { TransactionHistoryPage } from "@/pages/TransactionHistoryPage";
+import { AboutHelpPage } from "@/pages/AboutHelpPage";
 
 // React Query client with optimal defaults
 const queryClient = new QueryClient({
@@ -51,6 +52,7 @@ export default function App() {
           <Route path="/forgot-password" element={<PasswordResetPage />} />
           <Route path="/terms" element={<TermsOfServicePage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
+          <Route path="/help" element={<AboutHelpPage />} />
           
           {/* Protected routes with responsive layout */}
           <Route path="/dashboard" element={
