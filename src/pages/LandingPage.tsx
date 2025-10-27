@@ -373,6 +373,7 @@ export function LandingPage() {
               <ul className="space-y-2 text-text-secondary">
                 <li><a href="#" className="hover:text-mint-green">Help Center</a></li>
                 <li><a href="#" className="hover:text-mint-green">Contact Us</a></li>
+                <li><Link to="/terms" className="hover:text-mint-green">Terms of Service</Link></li>
                 <li><a href="#" className="hover:text-mint-green">Privacy Policy</a></li>
               </ul>
             </div>

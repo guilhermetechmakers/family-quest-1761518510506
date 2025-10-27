@@ -10,6 +10,7 @@ import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useSignIn, useSignUp } from '@/hooks/useAuth';
 import { PasswordRecoveryModal } from '@/components/auth/PasswordRecoveryModal';
+import { TermsCheckbox } from '@/components/auth/TermsAcknowledgement';
 import { 
   Eye, 
   EyeOff, 
@@ -539,33 +540,15 @@ export function AuthPage() {
                       </p>
                     </div>
 
-                    <div className="flex items-start">
-                      <div className="flex items-center h-5">
-                        <input
-                          id="terms"
-                          type="checkbox"
-                          className="h-4 w-4 text-mint-green focus:ring-mint-green border-gray-300 rounded"
-                          {...signupForm.register('terms')}
-                        />
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label htmlFor="terms" className="text-text-secondary">
-                          I agree to the{' '}
-                          <Link to="/terms" className="text-mint-green hover:text-light-mint">
-                            Terms of Service
-                          </Link>{' '}
-                          and{' '}
-                          <Link to="/privacy" className="text-mint-green hover:text-light-mint">
-                            Privacy Policy
-                          </Link>
-                        </label>
-                        {signupForm.formState.errors.terms && (
-                          <p className="mt-1 text-sm text-red-500">
-                            {signupForm.formState.errors.terms.message}
-                          </p>
-                        )}
-                      </div>
-                    </div>
+                    <TermsCheckbox
+                      accepted={signupForm.watch('terms')}
+                      onAccept={(accepted) => signupForm.setValue('terms', accepted)}
+                    />
+                    {signupForm.formState.errors.terms && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {signupForm.formState.errors.terms.message}
+                      </p>
+                    )}
 
                     <Button
                       type="submit"

@@ -14,6 +14,7 @@ import { ActivityFeedPage } from "@/pages/ActivityFeedPage";
 import { NotificationsPage } from "@/pages/NotificationsPage";
 import { SettingsPage } from "@/pages/SettingsPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
+import { TermsOfServicePage } from "@/pages/TermsOfServicePage";
 
 // React Query client with optimal defaults
 const queryClient = new QueryClient({
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="/signup" element={<AuthPage />} />
           <Route path="/verify-email" element={<EmailVerificationPage />} />
           <Route path="/forgot-password" element={<PasswordResetPage />} />
+          <Route path="/terms" element={<TermsOfServicePage />} />
           
           {/* Protected routes with responsive layout */}
           <Route path="/dashboard" element={
