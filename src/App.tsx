@@ -14,12 +14,14 @@ import { ActivityFeedPage } from "@/pages/ActivityFeedPage";
 import { NotificationsPage } from "@/pages/NotificationsPage";
 import { SettingsPage } from "@/pages/SettingsPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
+import { ServerErrorPage } from "@/pages/ServerErrorPage";
 import { TermsOfServicePage } from "@/pages/TermsOfServicePage";
 import { PrivacyPolicyPage } from "@/pages/PrivacyPolicyPage";
 import { CookiePolicyPage } from "@/pages/CookiePolicyPage";
 import { AdminDashboardPage } from "@/pages/AdminDashboardPage";
 import { TransactionHistoryPage } from "@/pages/TransactionHistoryPage";
 import { AboutHelpPage } from "@/pages/AboutHelpPage";
+import { ErrorTestPage } from "@/pages/ErrorTestPage";
 
 // React Query client with optimal defaults
 const queryClient = new QueryClient({
@@ -100,6 +102,13 @@ export default function App() {
           
           {/* Admin routes */}
           <Route path="/admin" element={<AdminDashboardPage />} />
+          
+          {/* Error pages */}
+          <Route path="/500" element={<ServerErrorPage />} />
+          <Route path="/server-error" element={<ServerErrorPage />} />
+          
+          {/* Development/Testing pages */}
+          <Route path="/test-errors" element={<ErrorTestPage />} />
           
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
