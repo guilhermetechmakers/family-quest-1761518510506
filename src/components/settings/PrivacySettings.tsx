@@ -21,9 +21,11 @@ import {
   Lock,
   Users,
   BarChart3,
-  Mail
+  Mail,
+  Cookie
 } from 'lucide-react';
 import { useExportData, useDeleteAccount, useUpdateDataSharingPreferences } from '@/hooks/useSettings';
+import { Link } from 'react-router-dom';
 
 const dataSharingSchema = z.object({
   analytics: z.boolean(),
@@ -237,11 +239,60 @@ export function PrivacySettings() {
         </Card>
       </motion.div>
 
-      {/* Data Export */}
+      {/* Cookie Policy */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.2 }}
+      >
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-pastel-yellow rounded-lg">
+                <Cookie className="h-5 w-5 text-text-primary" />
+              </div>
+              <div>
+                <CardTitle>Cookie Preferences</CardTitle>
+                <CardDescription>
+                  Manage your cookie settings and learn about how we use cookies
+                </CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <p className="text-text-secondary">
+                We use cookies to enhance your experience, analyze app usage, and provide personalized content. 
+                You can control which cookies you accept and learn more about our cookie practices.
+              </p>
+
+              <div className="p-4 bg-mint-tint rounded-xl">
+                <h4 className="font-medium text-text-primary mb-2">Cookie Categories:</h4>
+                <ul className="text-sm text-text-secondary space-y-1">
+                  <li>• <strong>Essential:</strong> Required for app functionality</li>
+                  <li>• <strong>Analytics:</strong> Help us understand app usage</li>
+                  <li>• <strong>Personalization:</strong> Remember your preferences</li>
+                  <li>• <strong>Marketing:</strong> Enable personalized content</li>
+                </ul>
+              </div>
+
+              <div className="flex justify-end">
+                <Link to="/cookies">
+                  <Button className="btn-primary">
+                    Manage Cookie Settings
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Data Export */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.3 }}
       >
         <Card>
           <CardHeader>
@@ -294,7 +345,7 @@ export function PrivacySettings() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.3 }}
+        transition={{ duration: 0.4, delay: 0.4 }}
       >
         <Card className="border-red-200">
           <CardHeader>

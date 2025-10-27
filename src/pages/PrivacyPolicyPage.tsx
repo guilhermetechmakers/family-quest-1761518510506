@@ -769,6 +769,9 @@ If you are not satisfied with our response, you may contact your local data prot
               <Link to="/terms" className="hover:text-mint-green transition-colors duration-200">
                 Terms of Service
               </Link>
+              <Link to="/cookies" className="hover:text-mint-green transition-colors duration-200">
+                Cookie Policy
+              </Link>
               <Link to="/about" className="hover:text-mint-green transition-colors duration-200">
                 About Us
               </Link>

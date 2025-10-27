@@ -16,6 +16,7 @@ import { SettingsPage } from "@/pages/SettingsPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { TermsOfServicePage } from "@/pages/TermsOfServicePage";
 import { PrivacyPolicyPage } from "@/pages/PrivacyPolicyPage";
+import { CookiePolicyPage } from "@/pages/CookiePolicyPage";
 import { AdminDashboardPage } from "@/pages/AdminDashboardPage";
 import { TransactionHistoryPage } from "@/pages/TransactionHistoryPage";
 import { AboutHelpPage } from "@/pages/AboutHelpPage";
@@ -52,6 +53,7 @@ export default function App() {
           <Route path="/forgot-password" element={<PasswordResetPage />} />
           <Route path="/terms" element={<TermsOfServicePage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
+          <Route path="/cookies" element={<CookiePolicyPage />} />
           <Route path="/help" element={<AboutHelpPage />} />
           
           {/* Protected routes with responsive layout */}
