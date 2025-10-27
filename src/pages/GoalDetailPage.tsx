@@ -125,8 +125,7 @@ export function GoalDetailPage() {
   };
 
   const handleEditGoal = () => {
-    // TODO: Implement edit goal functionality
-    toast.success('Edit goal functionality coming soon!');
+    navigate(`/goals/${id}/edit`);
   };
 
   const handleArchiveGoal = () => {

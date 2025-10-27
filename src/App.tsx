@@ -9,6 +9,7 @@ import { ForgotPasswordPage } from "@/pages/ForgotPasswordPage";
 import { ResetPasswordPage } from "@/pages/ResetPasswordPage";
 import { DashboardPage } from "@/pages/DashboardPage";
 import { GoalDetailPage } from "@/pages/GoalDetailPage";
+import { EditGoalPage } from "@/pages/EditGoalPage";
 import { CreateGoalPage } from "@/pages/CreateGoalPage";
 import { ProfilePage } from "@/pages/ProfilePage";
 import { ActivityFeedPage } from "@/pages/ActivityFeedPage";
@@ -78,6 +79,11 @@ export default function App() {
           <Route path="/goals/:id" element={
             <ResponsiveLayout unreadNotifications={3} user={mockUser}>
               <GoalDetailPage />
+            </ResponsiveLayout>
+          } />
+          <Route path="/goals/:id/edit" element={
+            <ResponsiveLayout unreadNotifications={3} user={mockUser}>
+              <EditGoalPage />
             </ResponsiveLayout>
           } />
           <Route path="/goals/create" element={
