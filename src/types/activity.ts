@@ -68,3 +68,44 @@ export interface CreateReactionInput {
   activity_id: string;
   emoji: string;
 }
+
+// Filter and search types for activity feed
+export interface ActivityFilters {
+  goal_id?: string;
+  user_id?: string;
+  type?: ActivityType;
+  date_from?: string;
+  date_to?: string;
+}
+
+export interface ActivityFeedQuery {
+  family_id: string;
+  filters?: ActivityFilters;
+  page?: number;
+  limit?: number;
+  sort?: 'newest' | 'oldest';
+}
+
+export interface ActivityFeedResponse {
+  activities: Activity[];
+  total: number;
+  page: number;
+  has_more: boolean;
+}
+
+// Post composer types
+export interface PostComposerData {
+  content: string;
+  goal_id?: string;
+  type: 'general' | 'milestone' | 'celebration';
+  media_urls?: string[];
+  tags?: string[];
+}
+
+// Child-friendly post composer
+export interface ChildPostData {
+  content: string;
+  emoji: string;
+  goal_id?: string;
+  photo_url?: string;
+}

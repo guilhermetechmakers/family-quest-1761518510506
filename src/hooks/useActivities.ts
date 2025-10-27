@@ -1,6 +1,7 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
 import { activitiesApi } from '@/api/activities';
 import { toast } from 'sonner';
+import type { ActivityFeedQuery } from '@/types/activity';
 
 // Query keys
 export const activityKeys = {
@@ -11,6 +12,7 @@ export const activityKeys = {
   detail: (id: string) => [...activityKeys.details(), id] as const,
   family: (familyId: string) => [...activityKeys.lists(), 'family', familyId] as const,
   goal: (goalId: string) => [...activityKeys.lists(), 'goal', goalId] as const,
+  feed: (query: ActivityFeedQuery) => [...activityKeys.all, 'feed', query] as const,
 };
 
 // Get activities for a family
@@ -124,6 +126,65 @@ export const useDeleteActivity = () => {
     },
     onError: (error) => {
       toast.error(`Failed to delete activity: ${error.message}`);
+    },
+  });
+};
+
+// Get paginated activity feed with infinite scroll
+export const useActivityFeed = (query: ActivityFeedQuery) => {
+  return useInfiniteQuery({
+    queryKey: activityKeys.feed(query),
+    queryFn: ({ pageParam = 1 }) => 
+      activitiesApi.getFeed({ ...query, page: pageParam }),
+    getNextPageParam: (lastPage) => 
+      lastPage.has_more ? lastPage.page + 1 : undefined,
+    initialPageParam: 1,
+    staleTime: 1000 * 60 * 2, // 2 minutes
+  });
+};
+
+// Create post mutation
+export const useCreatePost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: activitiesApi.createPost,
+    onSuccess: () => {
+      // Invalidate all activity feeds
+      queryClient.invalidateQueries({ queryKey: activityKeys.all });
+      
+      toast.success('Post created successfully!');
+    },
+    onError: (error) => {
+      toast.error(`Failed to create post: ${error.message}`);
+    },
+  });
+};
+
+// Create child post mutation
+export const useCreateChildPost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: activitiesApi.createChildPost,
+    onSuccess: () => {
+      // Invalidate all activity feeds
+      queryClient.invalidateQueries({ queryKey: activityKeys.all });
+      
+      toast.success('Post created successfully!');
+    },
+    onError: (error) => {
+      toast.error(`Failed to create post: ${error.message}`);
+    },
+  });
+};
+
+// Upload media mutation
+export const useUploadMedia = () => {
+  return useMutation({
+    mutationFn: activitiesApi.uploadMedia,
+    onError: (error) => {
+      toast.error(`Failed to upload media: ${error.message}`);
     },
   });
 };
