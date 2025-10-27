@@ -8,41 +8,70 @@ export default {
   theme: {
   	extend: {
   		colors: {
-  			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
-  			},
-  			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
-  			},
-  			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
-  			},
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
-  			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
-  			},
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
-  			'mint-green': '#B9F5D0',
-  			'pale-lavender': '#E2D7FB',
-  			'light-pink': '#F7E1F5',
-  			'pastel-yellow': '#FFE9A7',
-  			'light-mint': '#A7F3D0',
-  			'light-purple': '#C4B5FD',
-  			'cream-yellow': '#FFF8E7',
-  			'mint-tint': '#ECFDF5',
-  			'pale-lavender-bg': '#F6F6FF',
-  			'primary-bg': '#F7FAFC',
-  			'text-primary': '#121212',
-  			'text-secondary': '#717171',
-  			'text-tertiary': '#A3A3A3'
-  		},
+		primary: {
+			DEFAULT: 'rgb(var(--primary))',
+			foreground: 'rgb(var(--primary-foreground))'
+		},
+		secondary: {
+			DEFAULT: 'rgb(var(--secondary))',
+			foreground: 'rgb(var(--secondary-foreground))'
+		},
+		accent: {
+			DEFAULT: 'rgb(var(--accent))',
+			foreground: 'rgb(var(--accent-foreground))'
+		},
+		background: 'rgb(var(--background))',
+		foreground: 'rgb(var(--foreground))',
+		card: {
+			DEFAULT: 'rgb(var(--card))',
+			foreground: 'rgb(var(--card-foreground))'
+		},
+		border: 'rgb(var(--border))',
+		input: 'rgb(var(--input))',
+		ring: 'rgb(var(--ring))',
+		muted: {
+			DEFAULT: 'rgb(var(--muted))',
+			foreground: 'rgb(var(--muted-foreground))'
+		},
+		popover: {
+			DEFAULT: 'rgb(var(--popover))',
+			foreground: 'rgb(var(--popover-foreground))'
+		},
+			'mint-green': 'rgb(var(--mint-green))',
+			'pale-lavender': 'rgb(var(--pale-lavender))',
+			'light-pink': 'rgb(var(--light-pink))',
+			'pastel-yellow': 'rgb(var(--pastel-yellow))',
+			'light-mint': 'rgb(var(--light-mint))',
+			'light-purple': 'rgb(var(--light-purple))',
+			'cream-yellow': 'rgb(var(--cream-yellow))',
+			'mint-tint': 'rgb(var(--mint-tint))',
+			'pale-lavender-bg': 'rgb(var(--pale-lavender-bg))',
+			'primary-bg': 'rgb(var(--primary-bg))',
+			'text-primary': 'rgb(var(--text-primary))',
+			'text-secondary': 'rgb(var(--text-secondary))',
+			'text-tertiary': 'rgb(var(--text-tertiary))',
+			'success': {
+				DEFAULT: 'rgb(var(--success))',
+				foreground: 'rgb(var(--success-foreground))'
+			},
+			'warning': {
+				DEFAULT: 'rgb(var(--warning))',
+				foreground: 'rgb(var(--warning-foreground))'
+			},
+			'error': {
+				DEFAULT: 'rgb(var(--error))',
+				foreground: 'rgb(var(--error-foreground))'
+			},
+			'info': {
+				DEFAULT: 'rgb(var(--info))',
+				foreground: 'rgb(var(--info-foreground))'
+			},
+			'auth-bg': 'rgb(var(--auth-bg))',
+			'auth-card': 'rgb(var(--auth-card))',
+			'auth-border': 'rgb(var(--auth-border))',
+			'auth-input': 'rgb(var(--auth-input))',
+			'auth-focus': 'rgb(var(--auth-focus))'
+		},
   		fontFamily: {
   			sans: [
   				'Inter',

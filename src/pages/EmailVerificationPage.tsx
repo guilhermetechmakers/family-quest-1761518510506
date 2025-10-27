@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
 import { Mail, CheckCircle, AlertCircle, ArrowLeft, RefreshCw, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { authApi } from '@/api/auth';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface VerificationState {
   status: 'pending' | 'verifying' | 'success' | 'error' | 'expired';
@@ -17,6 +15,7 @@ interface VerificationState {
 export function EmailVerificationPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { verifyEmail, resendVerificationEmail } = useAuth();
   const [verificationState, setVerificationState] = useState<VerificationState>({
     status: 'pending',
     message: 'Please check your email and click the verification link to activate your account.',
@@ -26,55 +25,6 @@ export function EmailVerificationPage() {
 
   const token = searchParams.get('token');
   const email = searchParams.get('email');
-
-  // Verify email mutation
-  const verifyEmailMutation = useMutation({
-    mutationFn: authApi.verifyEmail,
-    onSuccess: () => {
-      setVerificationState({
-        status: 'success',
-        message: 'Your email has been successfully verified! You can now access all features.',
-        canResend: false,
-        cooldownTime: 0,
-      });
-      toast.success('Email verified successfully!');
-      
-      // Redirect to dashboard after 2 seconds
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 2000);
-    },
-    onError: (error: any) => {
-      const errorMessage = error?.response?.data?.message || 'Verification failed. Please try again.';
-      setVerificationState({
-        status: 'error',
-        message: errorMessage,
-        canResend: true,
-        cooldownTime: 0,
-      });
-      toast.error(errorMessage);
-    },
-  });
-
-  // Resend email mutation
-  const resendEmailMutation = useMutation({
-    mutationFn: authApi.resendVerificationEmail,
-    onSuccess: () => {
-      setVerificationState(prev => ({
-        ...prev,
-        status: 'pending',
-        message: 'A new verification email has been sent. Please check your inbox.',
-        canResend: false,
-        cooldownTime: 60, // 60 seconds cooldown
-      }));
-      toast.success('Verification email sent!');
-      startCooldownTimer();
-    },
-    onError: (error: any) => {
-      const errorMessage = error?.response?.data?.message || 'Failed to resend email. Please try again.';
-      toast.error(errorMessage);
-    },
-  });
 
   // Cooldown timer
   const startCooldownTimer = () => {
@@ -104,15 +54,48 @@ export function EmailVerificationPage() {
         status: 'verifying',
         message: 'Verifying your email...',
       }));
-      verifyEmailMutation.mutate(token);
+      
+      verifyEmail(token)
+        .then(() => {
+          setVerificationState({
+            status: 'success',
+            message: 'Your email has been successfully verified! You can now access all features.',
+            canResend: false,
+            cooldownTime: 0,
+          });
+          
+          // Redirect to dashboard after 2 seconds
+          setTimeout(() => {
+            navigate('/dashboard');
+          }, 2000);
+        })
+        .catch((error) => {
+          const errorMessage = error?.response?.data?.message || 'Verification failed. Please try again.';
+          setVerificationState({
+            status: 'error',
+            message: errorMessage,
+            canResend: true,
+            cooldownTime: 0,
+          });
+        });
     }
-  }, [token]);
+  }, [token, verifyEmail, navigate]);
 
-  const handleResendEmail = () => {
+  const handleResendEmail = async () => {
     if (email) {
-      resendEmailMutation.mutate(email);
-    } else {
-      toast.error('Email address not found. Please try signing up again.');
+      try {
+        await resendVerificationEmail(email);
+        setVerificationState(prev => ({
+          ...prev,
+          status: 'pending',
+          message: 'A new verification email has been sent. Please check your inbox.',
+          canResend: false,
+          cooldownTime: 60, // 60 seconds cooldown
+        }));
+        startCooldownTimer();
+      } catch (error) {
+        // Error is handled by the auth context
+      }
     }
   };
 
@@ -205,15 +188,10 @@ export function EmailVerificationPage() {
               <div className="space-y-3">
                 <Button
                   onClick={handleResendEmail}
-                  disabled={!verificationState.canResend || resendEmailMutation.isPending}
+                  disabled={!verificationState.canResend}
                   className="w-full bg-mint-green hover:bg-light-mint text-text-primary font-medium py-3 rounded-full transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
-                  {resendEmailMutation.isPending ? (
-                    <>
-                      <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-                      Sending...
-                    </>
-                  ) : verificationState.canResend ? (
+                  {verificationState.canResend ? (
                     'Resend Verification Email'
                   ) : (
                     `Resend in ${verificationState.cooldownTime}s`

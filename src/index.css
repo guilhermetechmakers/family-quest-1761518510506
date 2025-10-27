@@ -47,6 +47,7 @@
     
     --pale-lavender: 226 215 251; /* #E2D7FB - Pale lavender */
     --light-purple: 196 181 253; /* #C4B5FD - Light purple */
+    --pale-lavender-bg: 246 246 255; /* #F6F6FF - Very pale lavender */
     
     --light-pink: 247 225 245; /* #F7E1F5 - Light pink */
     --pastel-yellow: 255 233 167; /* #FFE9A7 - Pastel yellow */
@@ -54,7 +55,29 @@
     
     --border: 226 232 240; /* #E2E8F0 - Border color */
     
+    /* Status Colors */
+    --success: 34 197 94; /* #22C55E - Success green */
+    --success-foreground: 255 255 255; /* White text on success */
+    --warning: 245 158 11; /* #F59E0B - Warning orange */
+    --warning-foreground: 255 255 255; /* White text on warning */
+    --error: 239 68 68; /* #EF4444 - Error red */
+    --error-foreground: 255 255 255; /* White text on error */
+    --info: 59 130 246; /* #3B82F6 - Info blue */
+    --info-foreground: 255 255 255; /* White text on info */
+    
+    /* Auth-specific colors */
+    --auth-bg: 247 250 252; /* #F7FAFC - Auth background */
+    --auth-card: 255 255 255; /* #FFFFFF - Auth card background */
+    --auth-border: 226 232 240; /* #E2E8F0 - Auth border */
+    --auth-input: 255 255 255; /* #FFFFFF - Auth input background */
+    --auth-focus: 185 245 208; /* #B9F5D0 - Auth focus color */
+    
     --radius: 1rem; /* 16px - Base border radius */
+    --radius-sm: 0.5rem; /* 8px - Small radius */
+    --radius-md: 0.75rem; /* 12px - Medium radius */
+    --radius-lg: 1rem; /* 16px - Large radius */
+    --radius-xl: 1.5rem; /* 24px - Extra large radius */
+    --radius-2xl: 2rem; /* 32px - 2X large radius */
   }
   
   .dark {
@@ -170,6 +193,31 @@
     @apply border-2 border-mint-green text-mint-green px-6 py-3 rounded-full font-medium hover:bg-mint-green hover:text-text-primary transition-all duration-200;
   }
   
+  /* Auth-specific styles */
+  .auth-container {
+    @apply min-h-screen bg-auth-bg flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8;
+  }
+  
+  .auth-card {
+    @apply bg-auth-card rounded-2xl shadow-card border border-auth-border p-8 max-w-md mx-auto;
+  }
+  
+  .auth-input {
+    @apply bg-auth-input border border-auth-border rounded-xl px-4 py-3 text-text-primary placeholder-text-tertiary focus:border-auth-focus focus:ring-2 focus:ring-auth-focus/20 transition-all duration-200;
+  }
+  
+  .auth-button {
+    @apply bg-mint-green text-text-primary px-6 py-3 rounded-full font-medium hover:bg-light-mint transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+  }
+  
+  .auth-button-secondary {
+    @apply bg-pale-lavender text-text-primary px-6 py-3 rounded-full font-medium hover:bg-light-purple transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+  }
+  
+  .auth-button-outline {
+    @apply border-2 border-auth-border text-text-primary px-6 py-3 rounded-full font-medium hover:bg-mint-tint hover:border-mint-green transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+  }
+  
   /* Status tags */
   .status-tag {
     @apply px-3 py-1 rounded-full text-sm font-semibold;
@@ -194,6 +242,38 @@
   
   .progress-line {
     @apply border-2 border-dashed border-light-purple;
+  }
+  
+  /* Social OAuth buttons */
+  .social-button {
+    @apply w-full flex items-center justify-center px-4 py-3 border border-auth-border rounded-xl bg-auth-input text-text-primary hover:bg-mint-tint hover:border-mint-green transition-all duration-200 hover:scale-105;
+  }
+  
+  /* Form validation styles */
+  .form-error {
+    @apply text-error text-sm mt-1;
+  }
+  
+  .form-success {
+    @apply text-success text-sm mt-1;
+  }
+  
+  /* Loading states */
+  .loading-spinner {
+    @apply animate-spin rounded-full h-4 w-4 border-2 border-text-tertiary border-t-mint-green;
+  }
+  
+  /* Password strength indicator */
+  .password-strength-weak {
+    @apply bg-error;
+  }
+  
+  .password-strength-medium {
+    @apply bg-warning;
+  }
+  
+  .password-strength-strong {
+    @apply bg-success;
   }
 }
 

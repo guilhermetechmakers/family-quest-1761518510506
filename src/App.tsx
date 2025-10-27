@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { ResponsiveLayout } from "@/components/layout/ResponsiveLayout";
 import { LandingPage } from "@/pages/LandingPage";
-import { AuthPage } from "@/pages/AuthPage";
+import { AuthPageNew as AuthPage } from "@/pages/AuthPageNew";
 import { EmailVerificationPage } from "@/pages/EmailVerificationPage";
 import { ForgotPasswordPage } from "@/pages/ForgotPasswordPage";
 import { ResetPasswordPage } from "@/pages/ResetPasswordPage";
@@ -55,8 +56,9 @@ const mockUser = {
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
           {/* Public routes without layout */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/auth" element={<AuthPage />} />
@@ -180,9 +182,10 @@ export default function App() {
           <Route path="/test-errors" element={<ErrorTestPage />} />
           
           <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-        <Toaster position="top-right" />
-      </BrowserRouter>
+          </Routes>
+          <Toaster position="top-right" />
+        </BrowserRouter>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
