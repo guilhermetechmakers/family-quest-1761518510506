@@ -21,6 +21,7 @@ import { PrivacyPolicyPage } from "@/pages/PrivacyPolicyPage";
 import { CookiePolicyPage } from "@/pages/CookiePolicyPage";
 import { AdminDashboardPage } from "@/pages/AdminDashboardPage";
 import { TransactionHistoryPage } from "@/pages/TransactionHistoryPage";
+import { ContributionsPage } from "@/pages/ContributionsPage";
 import { AboutHelpPage } from "@/pages/AboutHelpPage";
 import { ErrorTestPage } from "@/pages/ErrorTestPage";
 
@@ -99,6 +100,11 @@ export default function App() {
           <Route path="/transactions" element={
             <ResponsiveLayout unreadNotifications={3} user={mockUser}>
               <TransactionHistoryPage />
+            </ResponsiveLayout>
+          } />
+          <Route path="/contributions" element={
+            <ResponsiveLayout unreadNotifications={3} user={mockUser}>
+              <ContributionsPage />
             </ResponsiveLayout>
           } />
           

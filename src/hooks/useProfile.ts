@@ -107,7 +107,7 @@ export const useAddPaymentMethod = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: paymentsApi.addPaymentMethod,
+    mutationFn: paymentsApi.createPaymentMethod,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: profileKeys.paymentMethods });
       toast.success('Payment method added successfully!');
@@ -122,7 +122,7 @@ export const useUpdatePaymentMethod = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: paymentsApi.updatePaymentMethod,
+    mutationFn: paymentsApi.savePaymentMethod,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: profileKeys.paymentMethods });
       toast.success('Payment method updated successfully!');
@@ -152,7 +152,7 @@ export const useSetDefaultPaymentMethod = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: paymentsApi.setDefaultPaymentMethod,
+    mutationFn: paymentsApi.savePaymentMethod,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: profileKeys.paymentMethods });
       toast.success('Default payment method updated!');
@@ -166,7 +166,7 @@ export const useSetDefaultPaymentMethod = () => {
 export const useTransactions = (params?: { limit?: number; offset?: number; goal_id?: string; type?: string }) => {
   return useQuery({
     queryKey: [...profileKeys.transactions, params],
-    queryFn: () => paymentsApi.getTransactions(params),
+    queryFn: () => paymentsApi.getPaymentHistory(params),
     staleTime: 1000 * 60 * 2, // 2 minutes
   });
 };

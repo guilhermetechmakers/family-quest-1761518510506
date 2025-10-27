@@ -16,8 +16,9 @@ import {
 import { usePaymentMethods, useDeletePaymentMethod, useSetDefaultPaymentMethod } from '@/hooks/useProfile';
 import { AddPaymentMethodModal } from './AddPaymentMethodModal';
 import { cn } from '@/lib/utils';
+import type { PaymentMethod } from '@/api/payments';
 
-const brandColors = {
+const brandColors: Record<PaymentMethod['brand'], string> = {
   visa: 'bg-blue-500',
   mastercard: 'bg-red-500',
   amex: 'bg-green-500',
@@ -25,7 +26,7 @@ const brandColors = {
   other: 'bg-gray-500',
 };
 
-const brandIcons = {
+const brandIcons: Record<PaymentMethod['brand'], string> = {
   visa: 'VISA',
   mastercard: 'MC',
   amex: 'AMEX',
