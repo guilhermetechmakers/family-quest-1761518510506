@@ -8,3 +8,4 @@ export { notificationsApi } from './notifications';
 export { paymentsApi } from './payments';
 export { securityApi } from './security';
 export { settingsApi } from './settings';
+export { adminApi } from './admin';

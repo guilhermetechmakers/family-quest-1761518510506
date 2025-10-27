@@ -15,6 +15,7 @@ import { NotificationsPage } from "@/pages/NotificationsPage";
 import { SettingsPage } from "@/pages/SettingsPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { TermsOfServicePage } from "@/pages/TermsOfServicePage";
+import { AdminDashboardPage } from "@/pages/AdminDashboardPage";
 
 // React Query client with optimal defaults
 const queryClient = new QueryClient({
@@ -84,6 +85,10 @@ export default function App() {
               <SettingsPage />
             </ResponsiveLayout>
           } />
+          
+          {/* Admin routes */}
+          <Route path="/admin" element={<AdminDashboardPage />} />
+          
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Toaster position="top-right" />
