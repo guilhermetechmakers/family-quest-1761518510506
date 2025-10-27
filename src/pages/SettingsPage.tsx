@@ -7,6 +7,7 @@ import {
   User, 
   Users, 
   Bell, 
+  Clock,
   CreditCard, 
   Shield, 
   Palette,
@@ -19,11 +20,13 @@ import { NotificationSettings } from '@/components/settings/NotificationSettings
 import { PaymentSettings } from '@/components/settings/PaymentSettings';
 import { PrivacySettings } from '@/components/settings/PrivacySettings';
 import { AppPreferences } from '@/components/settings/AppPreferences';
+import { ReminderPreferences } from '@/components/reminders/ReminderPreferences';
 
 type SettingsSection = 
   | 'account' 
   | 'family' 
   | 'notifications' 
+  | 'reminders'
   | 'payments' 
   | 'privacy' 
   | 'preferences';
@@ -51,6 +54,14 @@ const settingsSections = [
     description: 'Control how and when you receive notifications',
     icon: Bell,
     color: 'bg-light-pink',
+    textColor: 'text-text-primary'
+  },
+  {
+    id: 'reminders' as const,
+    title: 'Reminders',
+    description: 'Manage your reminder preferences and settings',
+    icon: Clock,
+    color: 'bg-pastel-yellow',
     textColor: 'text-text-primary'
   },
   {
@@ -90,6 +101,8 @@ export function SettingsPage() {
         return <FamilySettings />;
       case 'notifications':
         return <NotificationSettings />;
+      case 'reminders':
+        return <ReminderPreferences />;
       case 'payments':
         return <PaymentSettings />;
       case 'privacy':

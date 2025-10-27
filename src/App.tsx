@@ -13,6 +13,7 @@ import { CreateGoalPage } from "@/pages/CreateGoalPage";
 import { ProfilePage } from "@/pages/ProfilePage";
 import { ActivityFeedPage } from "@/pages/ActivityFeedPage";
 import { NotificationsPage } from "@/pages/NotificationsPage";
+import { RemindersPage } from "@/pages/RemindersPage";
 import { SettingsPage } from "@/pages/SettingsPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { ServerErrorPage } from "@/pages/ServerErrorPage";
@@ -91,6 +92,11 @@ export default function App() {
           <Route path="/notifications" element={
             <ResponsiveLayout unreadNotifications={3} user={mockUser}>
               <NotificationsPage />
+            </ResponsiveLayout>
+          } />
+          <Route path="/reminders" element={
+            <ResponsiveLayout unreadNotifications={3} user={mockUser}>
+              <RemindersPage />
             </ResponsiveLayout>
           } />
           <Route path="/settings" element={

@@ -19,6 +19,7 @@ import {
   Settings as SettingsIcon
 } from 'lucide-react';
 import { useUpdateNotificationPreferences } from '@/hooks/useSettings';
+import { ReminderPreferences } from '@/components/reminders/ReminderPreferences';
 
 const notificationSchema = z.object({
   email_notifications: z.boolean(),
@@ -288,65 +289,13 @@ export function NotificationSettings() {
         </Card>
       </motion.div>
 
-      {/* Quiet Hours */}
+      {/* Reminder Preferences */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.2 }}
       >
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-cream-yellow rounded-lg">
-                <Clock className="h-5 w-5 text-text-primary" />
-              </div>
-              <div>
-                <CardTitle>Quiet Hours</CardTitle>
-                <CardDescription>
-                  Set times when you don't want to receive notifications
-                </CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label className="text-base font-medium">Enable Quiet Hours</Label>
-                  <p className="text-sm text-text-secondary">
-                    Pause notifications during specific times
-                  </p>
-                </div>
-                <Switch defaultChecked={false} />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Start Time</Label>
-                  <input
-                    type="time"
-                    defaultValue="22:00"
-                    className="w-full p-3 border border-border rounded-xl bg-background"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>End Time</Label>
-                  <input
-                    type="time"
-                    defaultValue="08:00"
-                    className="w-full p-3 border border-border rounded-xl bg-background"
-                  />
-                </div>
-              </div>
-
-              <div className="flex justify-end">
-                <Button className="btn-primary">
-                  Save Quiet Hours
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <ReminderPreferences />
       </motion.div>
     </div>
   );
